@@ -1,0 +1,11 @@
+<svg width="220" height="48" viewBox="0 0 220 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M8 44V18" stroke="#0D1B3D" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="8" cy="12" r="5" fill="#0D1B3D"/>
+  <path d="M14 44L28 20L42 44" stroke="#2563EB" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M48 44V18" stroke="#14B8A6" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="48" cy="12" r="5" fill="#14B8A6"/>
+  <path d="M48 6V2M44 5L48 1L52 5" stroke="#14B8A6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="62" y="32" font-family="system-ui, sans-serif" font-size="22" fill="#0D1B3D">
+    <tspan font-weight="400">We</tspan><tspan font-weight="700">Connect</tspan>
+  </text>
+</svg>
