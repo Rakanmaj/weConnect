@@ -1,90 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import {
-  ArrowRight,
-  BarChart3,
-  ClipboardCheck,
-  Code2,
-  FileSearch,
-  Handshake,
-  Layers,
-  UserCheck,
-} from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { PublicLayout } from "@/components/layout/public-layout";
-import { Button } from "@/components/ui/button";
 import { CtaSection } from "@/components/public/cta-section";
 import { PageHeader } from "@/components/public/page-header";
+import { CompanyJourney, DeveloperJourney } from "@/components/public/developer-journey";
 
 export const metadata: Metadata = {
   title: "How It Works",
   description: "Understand the WeConnect platform flow for developers and companies.",
 };
-
-const developerSteps = [
-  {
-    icon: UserCheck,
-    title: "Create your profile",
-    description:
-      "Sign up, choose your career track, and set your availability. Your profile becomes the foundation for everything that follows.",
-  },
-  {
-    icon: ClipboardCheck,
-    title: "Complete assessments",
-    description:
-      "Take role-specific assessments covering coding, debugging, architecture, and problem-solving. Scores feed directly into your verified profile.",
-  },
-  {
-    icon: Code2,
-    title: "Pass skill challenges",
-    description:
-      "Work through tiered challenges for each technology—Level 1, Level 2, and Master—to earn verified skill badges.",
-  },
-  {
-    icon: Layers,
-    title: "Deliver on projects",
-    description:
-      "Accept training projects, paid engagements, and hiring challenges. Real delivery builds your reliability score and project history.",
-  },
-  {
-    icon: BarChart3,
-    title: "Build your track record",
-    description:
-      "Company evaluations, on-time metrics, and requirements accuracy aggregate into a performance profile companies trust.",
-  },
-];
-
-const companySteps = [
-  {
-    icon: FileSearch,
-    title: "Post requirements",
-    description:
-      "Define project scope, required skills, timeline, and role type. Our matching engine surfaces developers with verified fit.",
-  },
-  {
-    icon: BarChart3,
-    title: "Review verified talent",
-    description:
-      "Browse developer profiles with skill levels, reliability scores, project history, and match percentages—not just resumes.",
-  },
-  {
-    icon: Layers,
-    title: "Run project evaluations",
-    description:
-      "Engage developers on real work before hiring. Evaluate delivery quality, communication, and technical execution firsthand.",
-  },
-  {
-    icon: ClipboardCheck,
-    title: "Compare candidates",
-    description:
-      "Side-by-side comparison on verified metrics helps your team make objective, data-informed hiring decisions.",
-  },
-  {
-    icon: Handshake,
-    title: "Hire with proof",
-    description:
-      "Extend offers backed by demonstrated performance. Reduce mis-hires and shorten time-to-productivity.",
-  },
-];
 
 export default function HowItWorksPage() {
   return (
@@ -99,77 +24,55 @@ export default function HowItWorksPage() {
         </div>
       </section>
 
-      <section className="py-16 lg:py-20">
-        <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
+      <section className="relative overflow-hidden bg-[#F7F9FC] py-20 lg:py-28">
+        <div aria-hidden className="absolute -left-40 top-10 h-[420px] w-[420px] rounded-full bg-navy/[0.055] blur-[110px]" />
+        <div aria-hidden className="absolute -right-40 top-[38%] h-[460px] w-[460px] rounded-full bg-teal/[0.075] blur-[120px]" />
+        <div aria-hidden className="absolute bottom-10 left-[35%] h-[320px] w-[320px] rounded-full bg-primary/[0.045] blur-[100px]" />
+
+        <div className="relative mx-auto max-w-7xl px-4 lg:px-8">
+          <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="text-label text-primary mb-2">For Developers</p>
-              <h2 className="text-h1 text-foreground">Your path to verified status</h2>
+              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-teal">For Developers</p>
+              <h2 className="max-w-3xl text-4xl font-semibold tracking-[-0.045em] text-[#0D1B3D] sm:text-5xl">
+                Your path to verified status
+              </h2>
             </div>
-            <Button variant="secondary" size="sm" asChild>
-              <Link href="/developers">
-                Developer details
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Button>
+            <Link
+              href="/developers"
+              className="group inline-flex h-10 w-fit items-center gap-2 rounded-full border border-navy/10 bg-white/55 px-4 text-sm font-medium text-navy shadow-sm backdrop-blur-sm transition-colors hover:border-teal/30 hover:bg-white"
+            >
+              Developer details
+              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </Link>
           </div>
 
-          <div className="space-y-0 border-l-2 border-primary/20 ml-5 pl-8">
-            {developerSteps.map((step, i) => (
-              <div key={step.title} className="relative pb-10 last:pb-0">
-                <div className="absolute -left-[calc(2rem+5px)] top-0 h-2.5 w-2.5 rounded-full bg-primary ring-4 ring-white" />
-                <div className="public-card flex flex-col sm:flex-row gap-4 p-5 sm:p-6">
-                  <div className="public-card-icon shrink-0">
-                    <step.icon className="h-5 w-5" />
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-caption text-primary">Step {i + 1}</p>
-                    <h3 className="text-h3 text-foreground mt-0.5">{step.title}</h3>
-                    <p className="mt-2 text-body-sm text-muted max-w-2xl">
-                      {step.description}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+          <DeveloperJourney />
         </div>
       </section>
 
-      <section className="py-16 lg:py-20 bg-surface/60 border-y border-border">
-        <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
+      <section className="relative overflow-hidden border-t border-navy/[0.055] bg-[#F7F9FC] py-20 lg:py-28">
+        <div aria-hidden className="absolute -right-40 top-10 h-[440px] w-[440px] rounded-full bg-teal/[0.085] blur-[115px]" />
+        <div aria-hidden className="absolute -left-44 top-[42%] h-[460px] w-[460px] rounded-full bg-navy/[0.05] blur-[120px]" />
+        <div aria-hidden className="absolute bottom-8 right-[32%] h-[320px] w-[320px] rounded-full bg-primary/[0.04] blur-[100px]" />
+
+        <div className="relative mx-auto max-w-7xl px-4 lg:px-8">
+          <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="text-label text-teal mb-2">For Companies</p>
-              <h2 className="text-h1 text-foreground">Hire based on demonstrated ability</h2>
+              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-teal">For Companies</p>
+              <h2 className="max-w-3xl text-4xl font-semibold tracking-[-0.045em] text-[#0D1B3D] sm:text-5xl">
+                Hire based on demonstrated ability
+              </h2>
             </div>
-            <Button variant="secondary" size="sm" asChild>
-              <Link href="/companies">
-                Company details
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Button>
+            <Link
+              href="/companies"
+              className="group inline-flex h-10 w-fit items-center gap-2 rounded-full border border-navy/10 bg-white/55 px-4 text-sm font-medium text-navy shadow-sm backdrop-blur-sm transition-colors hover:border-teal/30 hover:bg-white"
+            >
+              Company details
+              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </Link>
           </div>
 
-          <div className="space-y-0 border-l-2 border-teal/20 ml-5 pl-8">
-            {companySteps.map((step, i) => (
-              <div key={step.title} className="relative pb-10 last:pb-0">
-                <div className="absolute -left-[calc(2rem+5px)] top-0 h-2.5 w-2.5 rounded-full bg-teal ring-4 ring-surface" />
-                <div className="public-card public-card--teal flex flex-col sm:flex-row gap-4 p-5 sm:p-6">
-                  <div className="public-card-icon shrink-0">
-                    <step.icon className="h-5 w-5" />
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-caption text-teal">Step {i + 1}</p>
-                    <h3 className="text-h3 text-foreground mt-0.5">{step.title}</h3>
-                    <p className="mt-2 text-body-sm text-muted max-w-2xl">
-                      {step.description}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+          <CompanyJourney />
         </div>
       </section>
 

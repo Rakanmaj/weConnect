@@ -47,7 +47,7 @@ export default function ResetPasswordPage() {
               Your password has been reset successfully. You can now sign in with your
               new credentials.
             </p>
-            <Button className="mt-6" asChild>
+            <Button className="auth-primary-cta mt-6" asChild>
               <Link href="/login">Sign in</Link>
             </Button>
           </div>
@@ -84,7 +84,7 @@ export default function ResetPasswordPage() {
               />
             </div>
 
-            <Button type="submit" className="w-full" loading={loading}>
+            <Button type="submit" className="auth-primary-cta w-full" loading={loading}>
               Update password
             </Button>
           </form>

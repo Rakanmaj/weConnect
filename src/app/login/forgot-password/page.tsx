@@ -67,7 +67,7 @@ export default function ForgotPasswordPage() {
               />
             </div>
 
-            <Button type="submit" className="w-full" loading={loading}>
+            <Button type="submit" className="auth-primary-cta w-full" loading={loading}>
               Send reset link
             </Button>
           </form>

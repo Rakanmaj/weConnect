@@ -32,7 +32,7 @@ function VerifyEmailContent() {
             Your email has been verified successfully. Sign in to complete your
             profile and start using WeConnect.
           </p>
-          <Button className="mt-6 w-full" asChild>
+          <Button className="auth-primary-cta mt-6 w-full" asChild>
             <Link href="/login">Sign in</Link>
           </Button>
         </div>
@@ -61,7 +61,7 @@ function VerifyEmailContent() {
             new verification email from your account settings, or contact support.
           </p>
           <div className="mt-6 flex flex-col gap-2">
-            <Button className="w-full" asChild>
+            <Button className="auth-primary-cta w-full" asChild>
               <Link href="/login">Sign in to resend</Link>
             </Button>
             <Button variant="secondary" className="w-full" asChild>

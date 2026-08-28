@@ -2,14 +2,47 @@ import { cn } from "@/lib/utils";
 
 /** Official stacked WeConnect mark + wordmark (1024×682) */
 const LOGO_SRC = "/brand/weconnect-logo.png";
+const LOGO_ICON_SRC = "/brand/logo-icon.svg";
+const CIRCULAR_LOGO_SRC = "/brand/logo-circular.png";
 const LOGO_ASPECT = 1024 / 682;
+
+interface CircularLogoProps {
+  className?: string;
+  size?: number;
+  priority?: boolean;
+}
+
+/** Official circular artwork used in immersive authentication experiences. */
+export function CircularLogo({ className, size = 64, priority = false }: CircularLogoProps) {
+  return (
+    <span
+      className={cn(
+        "relative inline-flex shrink-0 overflow-hidden rounded-full border border-white/70 bg-white",
+        className
+      )}
+      style={{ width: size, height: size }}
+    >
+      {/* This static brand asset is served directly so it never waits for runtime image optimization. */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={CIRCULAR_LOGO_SRC}
+        alt="WeConnect"
+        width={size}
+        height={size}
+        loading={priority ? "eager" : "lazy"}
+        className="absolute inset-0 h-full w-full object-cover"
+        draggable={false}
+      />
+    </span>
+  );
+}
 
 interface LogoIconProps {
   className?: string;
   size?: number;
 }
 
-/** Icon-only crop from the official logo (top portion, no wordmark) */
+/** Transparent icon-only brand mark, without the wordmark or image background. */
 export function LogoIcon({ className, size = 32 }: LogoIconProps) {
   const width = size * 1.2;
   return (
@@ -20,10 +53,9 @@ export function LogoIcon({ className, size = 32 }: LogoIconProps) {
     >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={LOGO_SRC}
+        src={LOGO_ICON_SRC}
         alt=""
-        className="absolute left-0 top-0 w-full max-w-none object-cover object-top"
-        style={{ height: size * 1.55 }}
+        className="absolute inset-0 h-full w-full object-contain"
         draggable={false}
       />
     </span>

@@ -200,6 +200,85 @@ body {
   transform: translate3d(0, 0, 0);
 }
 
+/* Immersive authentication experience. */
+.auth-stage {
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 15% 15%, rgba(37, 99, 235, 0.16), transparent 30%),
+    radial-gradient(circle at 85% 80%, rgba(20, 184, 166, 0.13), transparent 34%),
+    #071126;
+}
+
+.auth-stage::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  content: "";
+  opacity: 0.18;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 46px 46px;
+  mask-image: linear-gradient(to bottom, black, transparent 88%);
+  -webkit-mask-image: linear-gradient(to bottom, black, transparent 88%);
+}
+
+.auth-glass {
+  border: 1px solid rgba(255, 255, 255, 0.48);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(244, 248, 255, 0.9));
+  box-shadow:
+    0 30px 90px rgba(0, 0, 0, 0.28),
+    inset 0 1px rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(24px);
+}
+
+.auth-primary-cta {
+  color: #ffffff !important;
+  background-color: #0d1b3d !important;
+  background-image: linear-gradient(105deg, #0d1b3d 0%, #12355a 52%, #14b8a6 100%) !important;
+  box-shadow: 0 12px 28px -16px rgba(20, 184, 166, 0.9);
+  transition:
+    filter 220ms ease,
+    transform 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.auth-primary-cta:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+  box-shadow: 0 16px 34px -15px rgba(20, 184, 166, 0.95);
+}
+
+.auth-primary-cta:active {
+  transform: translateY(0);
+}
+
+.auth-glass input,
+.auth-glass select,
+.auth-glass textarea {
+  border-color: rgba(13, 27, 61, 0.12);
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: inset 0 1px 2px rgba(13, 27, 61, 0.025);
+}
+
+.auth-glass input:focus,
+.auth-glass select:focus,
+.auth-glass textarea:focus {
+  background: white;
+  border-color: rgba(20, 184, 166, 0.72);
+  box-shadow:
+    0 0 0 3px rgba(20, 184, 166, 0.11),
+    0 8px 24px -18px rgba(13, 27, 61, 0.5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-stage *,
+  .auth-stage *::before,
+  .auth-stage *::after {
+    scroll-behavior: auto !important;
+  }
+}
+
 /* A shared, deliberate card language for the public marketing experience. */
 .public-card {
   --card-accent: 37, 99, 235;

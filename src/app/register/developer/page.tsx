@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { PublicLayout } from "@/components/layout/public-layout";
-import { AuthLayout } from "@/components/public/auth-layout";
+import { ImmersiveAuthLayout } from "@/components/auth/immersive-auth-layout";
+import { DeveloperProfilePreview } from "@/components/auth/auth-visuals";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,6 +16,11 @@ const careerTracks = [
 
 export default function RegisterDeveloperPage() {
   const [loading, setLoading] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [preferredRole, setPreferredRole] = useState("");
+  const [location, setLocation] = useState("");
+  const [github, setGithub] = useState("");
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -26,104 +31,154 @@ export default function RegisterDeveloperPage() {
   }
 
   return (
-    <PublicLayout>
-      <AuthLayout
-        title="Create developer account"
-        description="Start building your verified profile"
-        footer={
-          <>
-            Already have an account?{" "}
-            <Link href="/login" className="text-primary font-medium hover:underline">
-              Sign in
-            </Link>
-          </>
-        }
-      >
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <div className="grid sm:grid-cols-2 gap-4">
-            <div className="space-y-2">
+    <ImmersiveAuthLayout
+      eyebrow="Build your proof"
+      title="Create developer account"
+      description="Your profile begins here and becomes stronger with every verified step."
+      theme="blue"
+      formSide="left"
+      compact
+      visual={
+        <DeveloperProfilePreview
+          name={`${firstName} ${lastName}`}
+          role={preferredRole}
+          location={location}
+          github={github}
+        />
+      }
+      footer={
+        <>
+          Already have an account?{" "}
+          <Link href="/login" className="font-semibold text-primary hover:underline">
+            Sign in
+          </Link>
+        </>
+      }
+    >
+      <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="grid gap-3 sm:grid-cols-2">
+            <div className="space-y-1.5">
               <Label htmlFor="firstName" required>
                 First name
               </Label>
-              <Input id="firstName" name="firstName" required placeholder="Ahmad" />
+              <Input
+                id="firstName"
+                name="firstName"
+                required
+                placeholder="Ahmad"
+                onChange={(event) => setFirstName(event.target.value)}
+                className="h-10 rounded-xl"
+              />
             </div>
-            <div className="space-y-2">
+            <div className="space-y-1.5">
               <Label htmlFor="lastName" required>
                 Last name
               </Label>
-              <Input id="lastName" name="lastName" required placeholder="Ali" />
+              <Input
+                id="lastName"
+                name="lastName"
+                required
+                placeholder="Ali"
+                onChange={(event) => setLastName(event.target.value)}
+                className="h-10 rounded-xl"
+              />
             </div>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="email" required>
-              Email
-            </Label>
-            <Input
-              id="email"
-              name="email"
-              type="email"
-              required
-              placeholder="you@example.com"
-            />
+          <div className="grid gap-3 sm:grid-cols-2">
+            <div className="space-y-1.5">
+              <Label htmlFor="email" required>
+                Email
+              </Label>
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                required
+                placeholder="you@example.com"
+                className="h-10 rounded-xl"
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <Label htmlFor="preferredRole">Preferred position</Label>
+              <select
+                id="preferredRole"
+                name="preferredRole"
+                onChange={(event) => setPreferredRole(event.target.value)}
+                className="flex h-10 w-full rounded-xl border border-border bg-card px-3 py-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              >
+                <option value="">Select (optional)</option>
+                {careerTracks.map((track) => (
+                  <option key={track} value={track}>
+                    {track}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="preferredRole">
-              Preferred job position
-            </Label>
-            <select
-              id="preferredRole"
-              name="preferredRole"
-              className="flex h-11 w-full rounded-[6px] border border-border bg-card px-3 py-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-            >
-              <option value="">Select a preference (optional)</option>
-              {careerTracks.map((track) => (
-                <option key={track} value={track}>
-                  {track}
-                </option>
-              ))}
-            </select>
-            <p className="text-caption">This is a preference only. You choose the career path used for the assessment after your account is verified.</p>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <div className="space-y-1.5">
+              <Label htmlFor="location" required>
+                Location
+              </Label>
+              <Input
+                id="location"
+                name="location"
+                required
+                placeholder="Amman, Jordan"
+                onChange={(event) => setLocation(event.target.value)}
+                className="h-10 rounded-xl"
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <Label htmlFor="github">GitHub profile</Label>
+              <Input
+                id="github"
+                name="github"
+                type="url"
+                placeholder="github.com/username"
+                onChange={(event) => setGithub(event.target.value)}
+                className="h-10 rounded-xl"
+              />
+            </div>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="location" required>
-              Location
-            </Label>
-            <Input id="location" name="location" required placeholder="Amman, Jordan" />
+          <div className="grid gap-3 sm:grid-cols-2">
+            <div className="space-y-1.5">
+              <Label htmlFor="password" required>
+                Password
+              </Label>
+              <Input
+                id="password"
+                name="password"
+                type="password"
+                required
+                minLength={8}
+                placeholder="8+ characters"
+                className="h-10 rounded-xl"
+              />
+            </div>
+
+            <div className="space-y-1.5">
+              <Label htmlFor="confirmPassword" required>
+                Confirm password
+              </Label>
+              <Input
+                id="confirmPassword"
+                name="confirmPassword"
+                type="password"
+                required
+                minLength={8}
+                placeholder="Repeat password"
+                className="h-10 rounded-xl"
+              />
+            </div>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="password" required>
-              Password
-            </Label>
-            <Input
-              id="password"
-              name="password"
-              type="password"
-              required
-              minLength={8}
-              placeholder="••••••••"
-            />
-            <p className="text-caption">Must be at least 8 characters</p>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="confirmPassword" required>
-              Confirm password
-            </Label>
-            <Input
-              id="confirmPassword"
-              name="confirmPassword"
-              type="password"
-              required
-              minLength={8}
-              placeholder="••••••••"
-            />
-          </div>
-
-          <p className="text-caption">
+          <p className="text-[11px] leading-4 text-muted">
             By creating an account, you agree to our{" "}
             <Link href="/terms" className="text-primary hover:underline">
               Terms
@@ -135,18 +190,17 @@ export default function RegisterDeveloperPage() {
             .
           </p>
 
-          <Button type="submit" className="w-full" loading={loading}>
+          <Button type="submit" className="auth-primary-cta h-11 w-full rounded-xl" loading={loading}>
             Create account
           </Button>
 
-          <p className="text-center text-body-sm text-muted">
+          <p className="text-center text-xs text-muted">
             Hiring instead?{" "}
             <Link href="/register/company" className="text-primary hover:underline">
               Register as company
             </Link>
           </p>
-        </form>
-      </AuthLayout>
-    </PublicLayout>
+      </form>
+    </ImmersiveAuthLayout>
   );
 }
