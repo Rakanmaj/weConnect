@@ -3,7 +3,7 @@
 import { notFound } from "next/navigation";
 import { use } from "react";
 import { internalProjects } from "@/lib/mock-data";
-import { InternalProjectForm } from "../new/page";
+import { InternalProjectForm } from "../../new/page";
 
 export default function EditInternalProjectPage({ params }: PageProps<"/admin/internal-projects/[id]/edit">) {
   const { id } = use(params);

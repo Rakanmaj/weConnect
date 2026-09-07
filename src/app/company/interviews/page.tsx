@@ -1,10 +1,12 @@
 "use client";
 
+import Link from "next/link";
 import { PageHeader } from "@/components/ui/common";
 import { DataTable, type Column } from "@/components/ui/data-table";
 import { Avatar } from "@/components/ui/avatar";
 import { StatusBadge } from "@/components/ui/status-badges";
 import { companyInterviews } from "@/lib/mock-data";
+import { Button } from "@/components/ui/button";
 
 type InterviewRow = (typeof companyInterviews)[0];
 
@@ -28,12 +30,25 @@ const columns: Column<InterviewRow>[] = [
     header: "Status",
     cell: (row) => <StatusBadge status={row.status} />,
   },
+  {
+    key: "actions",
+    header: "Actions",
+    cell: (row) => (
+      <Button size="sm" variant="secondary" asChild>
+        <Link href={`/company/talent/${row.developer.id}`}>View Candidate</Link>
+      </Button>
+    ),
+  },
 ];
 
 export default function CompanyInterviewsPage() {
   return (
     <>
-      <PageHeader title="Interviews" description="Scheduled and requested interviews." />
+      <PageHeader
+        title="Interviews"
+        description="Scheduled and requested interviews."
+        action={<Button asChild><Link href="/company/offers">Continue to Offers</Link></Button>}
+      />
       <DataTable
         data={companyInterviews}
         columns={columns}

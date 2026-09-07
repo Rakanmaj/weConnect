@@ -1,9 +1,11 @@
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import { ProjectTabs } from "@/components/company/project-tabs";
 import { Card } from "@/components/ui/card";
 import { Avatar } from "@/components/ui/avatar";
 import { companyProjects, projectSubmissions } from "@/lib/mock-data";
 import { getSubmittedAssignments } from "@/lib/assignments";
+import { Button } from "@/components/ui/button";
 
 export default async function ProjectComparePage({ params }: PageProps<"/company/projects/[id]/compare">) {
   const { id } = await params;
@@ -63,6 +65,11 @@ export default async function ProjectComparePage({ params }: PageProps<"/company
           </table>
         </Card>
       )}
+      <div className="mt-6 flex justify-end">
+        <Button asChild>
+          <Link href={`/company/projects/${project.id}/evaluation`}>Evaluate Submission</Link>
+        </Button>
+      </div>
     </>
   );
 }

@@ -1,11 +1,13 @@
 "use client";
 
+import Link from "next/link";
 import { PageHeader } from "@/components/ui/common";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { hiringPipeline } from "@/lib/mock-data";
 import type { HiringStage } from "@/types";
+import { Button } from "@/components/ui/button";
 
 const stages: HiringStage[] = [
   "Recommended",
@@ -50,6 +52,9 @@ export default function CompanyHiringPage() {
                           </div>
                         </div>
                         <p className="text-caption">{candidate.lastActivity}</p>
+                        <Button size="sm" variant="secondary" className="mt-3 w-full" asChild>
+                          <Link href={`/company/talent/${candidate.developer.id}`}>View Candidate</Link>
+                        </Button>
                       </CardContent>
                     </Card>
                   ))
@@ -58,6 +63,9 @@ export default function CompanyHiringPage() {
             </div>
           );
         })}
+      </div>
+      <div className="mt-6 flex justify-end">
+        <Button asChild><Link href="/company/interviews">Continue to Interviews</Link></Button>
       </div>
     </>
   );

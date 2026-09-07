@@ -3,6 +3,8 @@ import { ProjectTabs } from "@/components/company/project-tabs";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ProgressBar } from "@/components/ui/progress";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import { companyProjects, projectAnalysis } from "@/lib/mock-data";
 
 export default async function ProjectAnalysisPage({ params }: PageProps<"/company/projects/[id]/analysis">) {
@@ -63,6 +65,11 @@ export default async function ProjectAnalysisPage({ params }: PageProps<"/compan
             ))}
           </CardContent>
         </Card>
+      </div>
+      <div className="mt-6 flex justify-end">
+        <Button asChild>
+          <Link href={`/company/projects/${project.id}/matches`}>Review Top 4 Matches</Link>
+        </Button>
       </div>
     </>
   );

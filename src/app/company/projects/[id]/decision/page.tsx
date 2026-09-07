@@ -53,7 +53,7 @@ export default function ProjectDecisionPage({ params }: PageProps<"/company/proj
   const project = companyProjects.find((p) => p.id === id);
   if (!project) notFound();
 
-  const [selected, setSelected] = useState<string | null>(null);
+  const [selected, setSelected] = useState<string | null>("hire");
   const [developerId, setDeveloperId] = useState<string | null>(null);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [buyOpen, setBuyOpen] = useState(false);
@@ -163,6 +163,9 @@ export default function ProjectDecisionPage({ params }: PageProps<"/company/proj
         </Button>
         <Link href={`/company/projects/${project.id}`}>
           <Button variant="secondary">Back to project</Button>
+        </Link>
+        <Link href="/company/offers">
+          <Button variant="secondary">Continue to Offers</Button>
         </Link>
       </div>
 

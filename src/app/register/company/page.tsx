@@ -13,16 +13,16 @@ const companySizes = ["1-10", "11-50", "50-200", "200-500", "500+"];
 
 export default function RegisterCompanyPage() {
   const [loading, setLoading] = useState(false);
-  const [companyName, setCompanyName] = useState("");
-  const [industry, setIndustry] = useState("");
-  const [companySize, setCompanySize] = useState("");
+  const [companyName, setCompanyName] = useState("TechFlow Solutions");
+  const [industry, setIndustry] = useState("Software & Technology");
+  const [companySize, setCompanySize] = useState("50-200");
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
     setTimeout(() => {
-      window.location.href = "/register/verify-email?status=success";
-    }, 1200);
+      window.location.href = "/register/verify-email?status=success&role=company";
+    }, 650);
   }
 
   return (
@@ -59,7 +59,7 @@ export default function RegisterCompanyPage() {
                 id="companyName"
                 name="companyName"
                 required
-                placeholder="TechFlow Solutions"
+                value={companyName}
                 onChange={(event) => setCompanyName(event.target.value)}
                 className="h-10 rounded-xl"
               />
@@ -73,7 +73,7 @@ export default function RegisterCompanyPage() {
                 name="website"
                 type="url"
                 required
-                placeholder="https://company.com"
+                defaultValue="https://techflow.example.com"
                 className="h-10 rounded-xl"
               />
             </div>
@@ -88,7 +88,7 @@ export default function RegisterCompanyPage() {
                 id="industry"
                 name="industry"
                 required
-                placeholder="Software & Technology"
+                value={industry}
                 onChange={(event) => setIndustry(event.target.value)}
                 className="h-10 rounded-xl"
               />
@@ -101,6 +101,7 @@ export default function RegisterCompanyPage() {
                 id="size"
                 name="size"
                 required
+                value={companySize}
                 onChange={(event) => setCompanySize(event.target.value)}
                 className="flex h-10 w-full rounded-xl border border-border bg-card px-3 py-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               >
@@ -119,7 +120,7 @@ export default function RegisterCompanyPage() {
               <Label htmlFor="location" required>
                 Location
               </Label>
-              <Input id="location" name="location" required placeholder="Amman, Jordan" className="h-10 rounded-xl" />
+              <Input id="location" name="location" required defaultValue="Amman, Jordan" className="h-10 rounded-xl" />
             </div>
             <div className="space-y-1.5">
               <Label htmlFor="email" required>
@@ -130,7 +131,7 @@ export default function RegisterCompanyPage() {
                 name="email"
                 type="email"
                 required
-                placeholder="you@company.com"
+                defaultValue="sarah@techflow.example.com"
                 className="h-10 rounded-xl"
               />
             </div>
@@ -141,7 +142,7 @@ export default function RegisterCompanyPage() {
               <Label htmlFor="contactName" required>
                 Contact name
               </Label>
-              <Input id="contactName" name="contactName" required placeholder="Jane Smith" className="h-10 rounded-xl" />
+              <Input id="contactName" name="contactName" required defaultValue="Sarah Al-Masri" className="h-10 rounded-xl" />
             </div>
             <div className="space-y-1.5">
               <Label htmlFor="contactTitle" required>
@@ -151,7 +152,7 @@ export default function RegisterCompanyPage() {
                 id="contactTitle"
                 name="contactTitle"
                 required
-                placeholder="Head of Engineering"
+                defaultValue="Head of Engineering"
                 className="h-10 rounded-xl"
               />
             </div>
@@ -162,7 +163,7 @@ export default function RegisterCompanyPage() {
             <Textarea
               id="about"
               name="about"
-              placeholder="Brief description of your company and hiring needs..."
+              defaultValue="TechFlow builds customer-support software and is hiring verified full-stack developers for product delivery."
               rows={2}
               className="min-h-16 rounded-xl"
             />
@@ -179,7 +180,7 @@ export default function RegisterCompanyPage() {
                 type="password"
                 required
                 minLength={8}
-                placeholder="8+ characters"
+                defaultValue="WeConnect2026!"
                 className="h-10 rounded-xl"
               />
             </div>
@@ -194,7 +195,7 @@ export default function RegisterCompanyPage() {
                 type="password"
                 required
                 minLength={8}
-                placeholder="Repeat password"
+                defaultValue="WeConnect2026!"
                 className="h-10 rounded-xl"
               />
             </div>

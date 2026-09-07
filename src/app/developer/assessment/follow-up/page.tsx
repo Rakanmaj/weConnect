@@ -9,7 +9,14 @@ import { Textarea } from "@/components/ui/textarea";
 import { assessmentFollowUps } from "@/lib/mock-data";
 
 export default function AssessmentFollowUpPage() {
-  const [answers, setAnswers] = useState<Record<string, string>>({});
+  const [answers, setAnswers] = useState<Record<string, string>>(() =>
+    Object.fromEntries(
+      assessmentFollowUps.map((question) => [
+        question.id,
+        "I chose this approach to keep responsibilities separated, make the behavior testable, and handle loading and failure states predictably.",
+      ])
+    )
+  );
   const [submitted, setSubmitted] = useState(false);
 
   return (

@@ -3,7 +3,7 @@
 import { notFound, useRouter } from "next/navigation";
 import { use, useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, FileText, Github, Linkedin, Globe } from "lucide-react";
+import { ArrowLeft, FileText, Code2, BriefcaseBusiness, Globe } from "lucide-react";
 import { PageHeader, FormField } from "@/components/ui/common";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -120,8 +120,8 @@ export default function AdminDeveloperVerificationDetailPage({
             <CardContent className="pt-6 space-y-3">
               <h2 className="text-h3 text-foreground mb-3">Links & CV</h2>
               <p className="flex items-center gap-2 text-body-sm"><FileText className="h-4 w-4" /> {developer.cvUrl ?? "No CV uploaded"}</p>
-              <p className="flex items-center gap-2 text-body-sm"><Github className="h-4 w-4" /> {developer.github ?? "—"}</p>
-              <p className="flex items-center gap-2 text-body-sm"><Linkedin className="h-4 w-4" /> {developer.linkedin ?? "—"}</p>
+              <p className="flex items-center gap-2 text-body-sm"><Code2 className="h-4 w-4" /> {developer.github ?? "—"}</p>
+              <p className="flex items-center gap-2 text-body-sm"><BriefcaseBusiness className="h-4 w-4" /> {developer.linkedin ?? "—"}</p>
               <p className="flex items-center gap-2 text-body-sm"><Globe className="h-4 w-4" /> {developer.portfolio ?? "—"}</p>
             </CardContent>
           </Card>

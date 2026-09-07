@@ -164,6 +164,12 @@ export default function ProjectMatchesPage({ params }: PageProps<"/company/proje
         })}
       </div>
 
+      <div className="mt-6 flex justify-end">
+        <Button asChild>
+          <Link href={`/company/projects/${project.id}/progress`}>Continue to Project Progress</Link>
+        </Button>
+      </div>
+
       <ConfirmDialog
         open={!!inviteTarget}
         onOpenChange={(open) => !open && setInviteTarget(null)}

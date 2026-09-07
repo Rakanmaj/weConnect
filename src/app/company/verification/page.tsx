@@ -81,7 +81,17 @@ function VerificationContent() {
 
           {statusKey === "more-info" && (
             <div className="mt-6">
-              <Button>Upload documents</Button>
+              <Button asChild>
+                <Link href="/company/verification?status=pending">Upload Demo Documents</Link>
+              </Button>
+            </div>
+          )}
+
+          {statusKey === "pending" && (
+            <div className="mt-6">
+              <Button asChild>
+                <Link href="/company/verification?status=verified">Preview Approved State</Link>
+              </Button>
             </div>
           )}
 

@@ -11,6 +11,11 @@ import { Button } from "@/components/ui/button";
 function VerifyEmailContent() {
   const searchParams = useSearchParams();
   const status = searchParams.get("status");
+  const role = searchParams.get("role") === "company" ? "company" : "developer";
+  const continueHref = role === "company"
+    ? "/company/verification?status=pending"
+    : "/developer/onboarding?step=1";
+  const registerHref = role === "company" ? "/register/company" : "/register/developer";
 
   if (status === "success") {
     return (
@@ -18,8 +23,8 @@ function VerifyEmailContent() {
         title="Email verified"
         description="Your account is ready to go"
         footer={
-          <Link href="/login" className="text-primary font-medium hover:underline">
-            Continue to sign in
+          <Link href={continueHref} className="text-primary font-medium hover:underline">
+            Continue the {role} journey
           </Link>
         }
       >
@@ -29,11 +34,13 @@ function VerifyEmailContent() {
           </div>
           <h2 className="text-h4 text-foreground">You&apos;re all set</h2>
           <p className="mt-2 text-body-sm text-muted">
-            Your email has been verified successfully. Sign in to complete your
-            profile and start using WeConnect.
+            Your email has been verified successfully. Continue to the next
+            prefilled setup step in this prototype journey.
           </p>
           <Button className="auth-primary-cta mt-6 w-full" asChild>
-            <Link href="/login">Sign in</Link>
+            <Link href={continueHref}>
+              {role === "company" ? "Continue to company verification" : "Continue to developer profile"}
+            </Link>
           </Button>
         </div>
       </AuthLayout>
@@ -62,10 +69,10 @@ function VerifyEmailContent() {
           </p>
           <div className="mt-6 flex flex-col gap-2">
             <Button className="auth-primary-cta w-full" asChild>
-              <Link href="/login">Sign in to resend</Link>
+              <Link href={`/register/verify-email?role=${role}`}>Try again</Link>
             </Button>
             <Button variant="secondary" className="w-full" asChild>
-              <Link href="/register">Create new account</Link>
+              <Link href={registerHref}>Create new account</Link>
             </Button>
           </div>
         </div>
@@ -80,7 +87,7 @@ function VerifyEmailContent() {
       footer={
         <>
           Wrong email?{" "}
-          <Link href="/register" className="text-primary font-medium hover:underline">
+          <Link href={registerHref} className="text-primary font-medium hover:underline">
             Go back
           </Link>
         </>
@@ -103,8 +110,10 @@ function VerifyEmailContent() {
             <li>· Wait a few minutes and try again</li>
           </ul>
         </div>
-        <Button variant="secondary" className="mt-6 w-full">
-          Resend verification email
+        <Button variant="secondary" className="mt-6 w-full" asChild>
+          <Link href={`/register/verify-email?status=success&role=${role}`}>
+            Open demo verification link
+          </Link>
         </Button>
       </div>
     </AuthLayout>

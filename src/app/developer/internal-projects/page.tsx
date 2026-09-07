@@ -30,7 +30,7 @@ export default function InternalProjectsPage() {
             </div>
             <h3 className="text-h4 text-foreground mb-2 line-clamp-2">{p.title}</h3>
             <div className="flex flex-wrap gap-1.5 mb-4">
-              {p.technologies.map((t) => (
+              {p.skills.map((t) => (
                 <span key={t} className="text-xs px-2 py-0.5 rounded-[6px] bg-surface">{t}</span>
               ))}
             </div>
@@ -40,11 +40,17 @@ export default function InternalProjectsPage() {
                 {p.duration}
               </span>
               <span>{p.difficulty}</span>
-              <span>{p.role}</span>
+              <span>{p.careerPath}</span>
             </div>
-            <Button size="sm" className="mt-4 w-full sm:w-auto" disabled={p.status !== "Open"}>
-              {p.status === "Open" ? "Apply" : "In Progress"}
-            </Button>
+            {p.status === "Open" ? (
+              <Button size="sm" className="mt-4 w-full sm:w-auto" asChild>
+                <Link href="/developer/projects/invitations/proj-inv-1">Review &amp; Apply</Link>
+              </Button>
+            ) : (
+              <Button size="sm" className="mt-4 w-full sm:w-auto" variant="secondary" asChild>
+                <Link href="/developer/projects/proj-active-1">Open Workspace</Link>
+              </Button>
+            )}
           </Card>
         ))}
       </div>

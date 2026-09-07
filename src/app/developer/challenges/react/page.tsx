@@ -46,7 +46,7 @@ export function TicketDashboard() {
 }`}</pre>
             </div>
             <div className="flex flex-wrap gap-3 mt-4">
-              <Button>Submit Solution</Button>
+              <Button asChild><Link href="/developer/challenges/react?view=result">Submit Solution</Link></Button>
               <Button variant="secondary">Run Tests</Button>
             </div>
           </Card>

@@ -74,6 +74,14 @@ export default function VerificationPage() {
           </div>
         )}
 
+        {status === "pending" && (
+          <div className="mt-6">
+            <Button asChild>
+              <Link href="/developer/verification?status=verified">Preview Approved State</Link>
+            </Button>
+          </div>
+        )}
+
         {status === "more-info" && (
           <div className="mt-6 text-left">
             <p className="text-sm font-medium text-foreground mb-2">Required:</p>
@@ -81,9 +89,11 @@ export default function VerificationPage() {
               <li>Clear photo of government ID</li>
               <li>Updated CV with recent experience</li>
             </ul>
-            <Button className="mt-4">
+            <Button className="mt-4" asChild>
+              <Link href="/developer/verification?status=pending">
               <Upload className="h-4 w-4" />
-              Upload Documents
+              Upload Demo Documents
+              </Link>
             </Button>
           </div>
         )}

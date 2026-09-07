@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import {
   LayoutDashboard,
   Briefcase,
@@ -46,6 +46,8 @@ import {
   UserRound,
   UserSearch,
   WalletCards,
+  ArrowRight,
+  RotateCcw,
   type LucideIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -107,10 +109,114 @@ interface AppShellProps {
   portal: "developer" | "company" | "admin";
 }
 
+type DemoStep = { label: string; href: string };
+
+const DEMO_STARTS: Record<AppShellProps["portal"], string> = {
+  developer: "/developer/onboarding?step=1",
+  company: "/company/verification?status=pending",
+  admin: "/admin/dashboard",
+};
+
+function getNextDemoStep(
+  portal: AppShellProps["portal"],
+  pathname: string,
+  searchParams: { get(name: string): string | null }
+): DemoStep {
+  if (portal === "developer") {
+    if (pathname === "/developer/onboarding") {
+      const step = Math.min(9, Math.max(1, Number(searchParams.get("step") || 1)));
+      return step < 9
+        ? { label: `Profile step ${step + 1}`, href: `/developer/onboarding?step=${step + 1}` }
+        : { label: "Verification", href: "/developer/verification?status=pending" };
+    }
+    if (pathname === "/developer/verification") {
+      return searchParams.get("status") === "verified"
+        ? { label: "Career path", href: "/developer/career-path" }
+        : { label: "Approved state", href: "/developer/verification?status=verified" };
+    }
+    if (pathname === "/developer/career-path") return { label: "Assessment", href: "/developer/assessment?view=intro" };
+    if (pathname === "/developer/assessment") {
+      return searchParams.get("view") === "exam"
+        ? { label: "Process results", href: "/developer/assessment/processing" }
+        : { label: "Start assessment", href: "/developer/assessment?view=exam" };
+    }
+    if (pathname === "/developer/assessment/processing") return { label: "Follow-up", href: "/developer/assessment/follow-up" };
+    if (pathname === "/developer/assessment/follow-up") return { label: "Results", href: "/developer/assessment/results" };
+    if (pathname === "/developer/assessment/results") return { label: "Challenges", href: "/developer/challenges" };
+    if (pathname === "/developer/challenges") return { label: "React path", href: "/developer/challenges/react?view=path" };
+    if (pathname === "/developer/challenges/react") {
+      const view = searchParams.get("view") || "path";
+      if (view === "path") return { label: "Current challenge", href: "/developer/challenges/react?view=challenge" };
+      if (view === "challenge") return { label: "Challenge result", href: "/developer/challenges/react?view=result" };
+      return { label: "Skills", href: "/developer/skills" };
+    }
+    if (pathname === "/developer/skills") return { label: "Internal projects", href: "/developer/internal-projects" };
+    if (pathname === "/developer/internal-projects") return { label: "Project invitation", href: "/developer/projects/invitations/proj-inv-1" };
+    if (pathname.startsWith("/developer/projects/invitations/")) return { label: "Project workspace", href: "/developer/projects/proj-inv-1" };
+    if (pathname === "/developer/projects") return { label: "Project invitation", href: "/developer/projects/invitations/proj-inv-1" };
+    if (/^\/developer\/projects\/[^/]+$/.test(pathname)) return { label: "Portfolio", href: "/developer/portfolio" };
+    if (pathname === "/developer/portfolio") return { label: "Career", href: "/developer/career" };
+    if (pathname === "/developer/career") return { label: "Interview", href: "/developer/interviews/int-1" };
+    if (pathname.startsWith("/developer/interviews/")) return { label: "Offer", href: "/developer/offers/offer-1" };
+    if (pathname.startsWith("/developer/offers/")) return { label: "Verified profile", href: "/developer/verified" };
+    if (pathname === "/developer/level") return { label: "Verified profile", href: "/developer/verified" };
+    if (pathname === "/developer/verified") return { label: "Dashboard", href: "/developer/dashboard" };
+    return { label: "Assessment", href: "/developer/assessment?view=intro" };
+  }
+
+  if (portal === "company") {
+    if (pathname === "/company/verification") {
+      return searchParams.get("status") === "verified"
+        ? { label: "Dashboard", href: "/company/dashboard" }
+        : { label: "Approved state", href: "/company/verification?status=verified" };
+    }
+    if (pathname === "/company/projects/new") {
+      const step = Math.min(10, Math.max(1, Number(searchParams.get("step") || 1)));
+      return step < 10
+        ? { label: `Project step ${step + 1}`, href: `/company/projects/new?step=${step + 1}` }
+        : { label: "Project analysis", href: "/company/projects/proj-csm-dashboard/analysis" };
+    }
+    if (pathname.endsWith("/analysis")) return { label: "Top matches", href: pathname.replace("/analysis", "/matches") };
+    if (pathname.endsWith("/matches")) return { label: "Project progress", href: pathname.replace("/matches", "/progress") };
+    if (pathname.endsWith("/progress")) return { label: "Submissions", href: pathname.replace("/progress", "/submissions") };
+    if (pathname.endsWith("/submissions")) return { label: "Compare", href: pathname.replace("/submissions", "/compare") };
+    if (pathname.endsWith("/compare")) return { label: "Evaluation", href: pathname.replace("/compare", "/evaluation") };
+    if (pathname.endsWith("/evaluation")) return { label: "Decision", href: pathname.replace("/evaluation", "/decision") };
+    if (pathname.endsWith("/decision")) return { label: "Hiring pipeline", href: "/company/hiring" };
+    if (pathname === "/company/projects") return { label: "Create project", href: "/company/projects/new?step=1" };
+    if (/^\/company\/projects\/[^/]+$/.test(pathname)) return { label: "Top matches", href: `${pathname}/matches` };
+    if (pathname === "/company/talent") return { label: "Top profile", href: "/company/talent/dev-ahmad" };
+    if (pathname.startsWith("/company/talent/")) return { label: "Hiring pipeline", href: "/company/hiring" };
+    if (pathname === "/company/hiring") return { label: "Interviews", href: "/company/interviews" };
+    if (pathname === "/company/interviews") return { label: "Offers", href: "/company/offers" };
+    if (pathname === "/company/offers") return { label: "Payments", href: "/company/payments" };
+    if (pathname === "/company/payments") return { label: "Dashboard", href: "/company/dashboard" };
+    return { label: "Create project", href: "/company/projects/new?step=1" };
+  }
+
+  if (pathname === "/admin/dashboard") return { label: "Developer verification", href: "/admin/developer-verification" };
+  if (pathname === "/admin/developer-verification") return { label: "Review developer", href: "/admin/developer-verification/vq-1" };
+  if (pathname.startsWith("/admin/developer-verification/")) return { label: "Company verification", href: "/admin/company-verification" };
+  if (pathname === "/admin/company-verification") return { label: "Review company", href: "/admin/company-verification/cvq-1" };
+  if (pathname.startsWith("/admin/company-verification/")) return { label: "Projects", href: "/admin/projects" };
+  if (pathname === "/admin/projects") return { label: "Project detail", href: "/admin/projects/proj-csm-dashboard" };
+  if (pathname.startsWith("/admin/projects/")) return { label: "Assessments", href: "/admin/assessments" };
+  if (pathname === "/admin/assessments") return { label: "Assessment detail", href: "/admin/assessments/as-1" };
+  if (pathname.startsWith("/admin/assessments/")) return { label: "Challenges", href: "/admin/challenges" };
+  if (pathname === "/admin/challenges") return { label: "Skills", href: "/admin/skills" };
+  if (pathname === "/admin/skills") return { label: "Hiring", href: "/admin/hiring" };
+  if (pathname === "/admin/hiring") return { label: "Hiring detail", href: "/admin/hiring/h1" };
+  if (pathname.startsWith("/admin/hiring/")) return { label: "Payments", href: "/admin/payments" };
+  if (pathname === "/admin/payments") return { label: "Reports", href: "/admin/reports" };
+  return { label: "Dashboard", href: "/admin/dashboard" };
+}
+
 export function AppShell({ children, navItems, user, portal }: AppShellProps) {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
+  const nextDemoStep = getNextDemoStep(portal, pathname, searchParams);
 
   const portalColors = {
     developer: "border-l-primary",
@@ -258,6 +364,23 @@ export function AppShell({ children, navItems, user, portal }: AppShellProps) {
 
           <div className="flex items-center gap-2 ml-auto">
             <Link
+              href={DEMO_STARTS[portal]}
+              className="hidden h-9 items-center justify-center gap-1.5 rounded-lg border border-border bg-white px-2.5 text-xs font-medium text-muted transition-colors hover:bg-surface hover:text-navy md:flex"
+              title="Restart this role's presentation journey"
+            >
+              <RotateCcw className="h-3.5 w-3.5" />
+              <span className="hidden xl:inline">Restart journey</span>
+            </Link>
+            <Link
+              href={nextDemoStep.href}
+              className="flex h-9 items-center justify-center gap-1.5 rounded-lg bg-navy px-3 text-xs font-semibold text-white shadow-sm transition-colors hover:bg-navy/90"
+              title={`Next demo step: ${nextDemoStep.label}`}
+            >
+              <span className="hidden sm:inline">Next: {nextDemoStep.label}</span>
+              <span className="sm:hidden">Next</span>
+              <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
+            <Link
               href={`/${portal}/notifications`}
               className="relative flex h-9 w-9 items-center justify-center rounded-lg border border-transparent text-muted transition-all hover:border-border hover:bg-surface hover:text-navy"
               aria-label="Notifications"
@@ -272,7 +395,7 @@ export function AppShell({ children, navItems, user, portal }: AppShellProps) {
             >
               <SlidersHorizontal className="h-[18px] w-[18px]" />
             </Link>
-            <Link href="/login" className="flex h-9 w-9 items-center justify-center rounded-lg border border-transparent text-muted transition-all hover:border-red-100 hover:bg-red-50 hover:text-red-600" aria-label="Sign out">
+            <Link href={portal === "admin" ? "/admin/login" : "/login"} className="flex h-9 w-9 items-center justify-center rounded-lg border border-transparent text-muted transition-all hover:border-red-100 hover:bg-red-50 hover:text-red-600" aria-label="Sign out">
               <LogOut className="h-[18px] w-[18px]" />
             </Link>
           </div>

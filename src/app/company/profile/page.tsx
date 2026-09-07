@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { PageHeader, FormField } from "@/components/ui/common";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -12,7 +13,14 @@ export default function CompanyProfilePage() {
       <PageHeader
         title="Company Profile"
         description="Manage your company information visible to developers."
-        action={<StatusBadge status={techFlowCompany.verificationStatus} />}
+        action={
+          <div className="flex flex-wrap items-center gap-2">
+            <StatusBadge status={techFlowCompany.verificationStatus} />
+            <Button variant="secondary" size="sm" asChild>
+              <Link href="/company/verification">View Verification Status</Link>
+            </Button>
+          </div>
+        }
       />
 
       <Card className="max-w-2xl">

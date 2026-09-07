@@ -16,18 +16,18 @@ const careerTracks = [
 
 export default function RegisterDeveloperPage() {
   const [loading, setLoading] = useState(false);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [preferredRole, setPreferredRole] = useState("");
-  const [location, setLocation] = useState("");
-  const [github, setGithub] = useState("");
+  const [firstName, setFirstName] = useState("Ahmad");
+  const [lastName, setLastName] = useState("Ali");
+  const [preferredRole, setPreferredRole] = useState("Full-Stack Developer");
+  const [location, setLocation] = useState("Amman, Jordan");
+  const [github, setGithub] = useState("https://github.com/ahmad-ali");
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
     setTimeout(() => {
-      window.location.href = "/register/verify-email?status=success";
-    }, 1200);
+      window.location.href = "/register/verify-email?status=success&role=developer";
+    }, 650);
   }
 
   return (
@@ -65,7 +65,7 @@ export default function RegisterDeveloperPage() {
                 id="firstName"
                 name="firstName"
                 required
-                placeholder="Ahmad"
+                value={firstName}
                 onChange={(event) => setFirstName(event.target.value)}
                 className="h-10 rounded-xl"
               />
@@ -78,7 +78,7 @@ export default function RegisterDeveloperPage() {
                 id="lastName"
                 name="lastName"
                 required
-                placeholder="Ali"
+                value={lastName}
                 onChange={(event) => setLastName(event.target.value)}
                 className="h-10 rounded-xl"
               />
@@ -95,7 +95,7 @@ export default function RegisterDeveloperPage() {
                 name="email"
                 type="email"
                 required
-                placeholder="you@example.com"
+                defaultValue="ahmad.ali@example.com"
                 className="h-10 rounded-xl"
               />
             </div>
@@ -105,6 +105,7 @@ export default function RegisterDeveloperPage() {
               <select
                 id="preferredRole"
                 name="preferredRole"
+                value={preferredRole}
                 onChange={(event) => setPreferredRole(event.target.value)}
                 className="flex h-10 w-full rounded-xl border border-border bg-card px-3 py-2 text-sm text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               >
@@ -127,7 +128,7 @@ export default function RegisterDeveloperPage() {
                 id="location"
                 name="location"
                 required
-                placeholder="Amman, Jordan"
+                value={location}
                 onChange={(event) => setLocation(event.target.value)}
                 className="h-10 rounded-xl"
               />
@@ -139,7 +140,7 @@ export default function RegisterDeveloperPage() {
                 id="github"
                 name="github"
                 type="url"
-                placeholder="github.com/username"
+                value={github}
                 onChange={(event) => setGithub(event.target.value)}
                 className="h-10 rounded-xl"
               />
@@ -157,7 +158,7 @@ export default function RegisterDeveloperPage() {
                 type="password"
                 required
                 minLength={8}
-                placeholder="8+ characters"
+                defaultValue="WeConnect2026!"
                 className="h-10 rounded-xl"
               />
             </div>
@@ -172,7 +173,7 @@ export default function RegisterDeveloperPage() {
                 type="password"
                 required
                 minLength={8}
-                placeholder="Repeat password"
+                defaultValue="WeConnect2026!"
                 className="h-10 rounded-xl"
               />
             </div>

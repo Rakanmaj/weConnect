@@ -29,19 +29,25 @@ export default function SkillsPage() {
           action={<VerifiedBadge type="weconnect" />}
         />
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {verified.map((s) => (
-            <Card key={s.name}>
-              <SkillBadge name={s.name} level={s.level} verified className="text-sm px-0 py-0 border-0 bg-transparent" />
-              {s.challengesCompleted && (
-                <p className="text-caption mt-3">{s.challengesCompleted} challenges completed</p>
-              )}
-              <Button variant="link" size="sm" className="p-0 h-auto mt-2" asChild>
-                <Link href={`/developer/challenges/${s.name.toLowerCase().replace(/\s+/g, "-")}`}>
-                  View path
-                </Link>
-              </Button>
-            </Card>
-          ))}
+          {verified.map((s) => {
+            const challengeHref = s.name === "React"
+              ? "/developer/challenges/react?view=path"
+              : "/developer/challenges";
+
+            return (
+              <Card key={s.name}>
+                <SkillBadge name={s.name} level={s.level} verified className="text-sm px-0 py-0 border-0 bg-transparent" />
+                {s.challengesCompleted && (
+                  <p className="text-caption mt-3">{s.challengesCompleted} challenges completed</p>
+                )}
+                <Button variant="link" size="sm" className="p-0 h-auto mt-2" asChild>
+                  <Link href={challengeHref}>
+                    View path
+                  </Link>
+                </Button>
+              </Card>
+            );
+          })}
         </div>
       </section>
 
@@ -55,11 +61,15 @@ export default function SkillsPage() {
             <Card key={s.name} className="border-dashed">
               <SkillBadge name={s.name} level={s.level} className="text-sm px-0 py-0 border-0 bg-transparent" />
               <p className="text-caption mt-3 text-amber-600">Not verified — take a challenge to verify</p>
-              <Button variant="secondary" size="sm" className="mt-3">Start Verification</Button>
+              <Button variant="secondary" size="sm" className="mt-3" asChild>
+                <Link href="/developer/challenges">Start Verification</Link>
+              </Button>
             </Card>
           ))}
         </div>
-        <Button variant="secondary" className="mt-4">Add Skill</Button>
+        <Button variant="secondary" className="mt-4" asChild>
+          <Link href="/developer/profile">Add Skill to Profile</Link>
+        </Button>
       </section>
     </div>
   );

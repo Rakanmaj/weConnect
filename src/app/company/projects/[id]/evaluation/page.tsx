@@ -2,6 +2,7 @@
 
 import { use, useState } from "react";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import { ProjectTabs } from "@/components/company/project-tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -28,10 +29,14 @@ export default function ProjectEvaluationPage({ params }: PageProps<"/company/pr
   const selected = participants.find((a) => a.id === selectedId) ?? evaluable[0];
 
   const criteria = settings.companyEvaluationRubric.filter((c) => c.enabled);
-  const [scores, setScores] = useState<Record<string, number>>({});
-  const [comments, setComments] = useState<Record<string, string>>({});
-  const [overall, setOverall] = useState("");
-  const [decision, setDecision] = useState<CompletionStatus | null>(null);
+  const [scores, setScores] = useState<Record<string, number>>(() =>
+    Object.fromEntries(criteria.map((criterion) => [criterion.key, 4]))
+  );
+  const [comments, setComments] = useState<Record<string, string>>(() =>
+    Object.fromEntries(criteria.map((criterion) => [criterion.key, "Clear, reliable delivery with strong evidence in the submitted prototype."]))
+  );
+  const [overall, setOverall] = useState("The submission meets the project requirements and demonstrates dependable full-stack delivery.");
+  const [decision, setDecision] = useState<CompletionStatus | null>("Completed");
   const [submittedFor, setSubmittedFor] = useState<Record<string, CompletionStatus>>({});
   const [confirmOpen, setConfirmOpen] = useState(false);
 
@@ -148,7 +153,12 @@ export default function ProjectEvaluationPage({ params }: PageProps<"/company/pr
             </div>
 
             {selectedDecision && (
-              <p className="text-body-sm text-teal">{selected.developer.name} marked {selectedDecision}.</p>
+              <div className="rounded-[8px] border border-teal/30 bg-teal/5 p-4">
+                <p className="text-body-sm text-teal">{selected.developer.name} marked {selectedDecision}.</p>
+                <Button className="mt-3" size="sm" asChild>
+                  <Link href={`/company/projects/${project.id}/decision`}>Continue to Final Decision</Link>
+                </Button>
+              </div>
             )}
 
             <Button disabled={!decision} onClick={() => setConfirmOpen(true)}>

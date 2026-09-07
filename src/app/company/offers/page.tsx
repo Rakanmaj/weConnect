@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { PageHeader } from "@/components/ui/common";
 import { DataTable, type Column } from "@/components/ui/data-table";
 import { Avatar } from "@/components/ui/avatar";
@@ -14,6 +15,7 @@ type OfferRow = (typeof companyOffers)[0];
 export default function CompanyOffersPage() {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [selectedOffer, setSelectedOffer] = useState<OfferRow | null>(null);
+  const [sentOfferIds, setSentOfferIds] = useState<string[]>([]);
 
   const columns: Column<OfferRow>[] = [
     {
@@ -31,7 +33,7 @@ export default function CompanyOffersPage() {
     {
       key: "status",
       header: "Status",
-      cell: (row) => <StatusBadge status={row.status} />,
+      cell: (row) => <StatusBadge status={sentOfferIds.includes(row.id) ? "Sent" : row.status} />,
     },
     { key: "sentDate", header: "Sent", cell: (row) => row.sentDate },
     { key: "expires", header: "Expires", cell: (row) => row.expires },
@@ -39,7 +41,7 @@ export default function CompanyOffersPage() {
       key: "actions",
       header: "Actions",
       cell: (row) =>
-        row.status === "Draft" ? (
+        row.status === "Draft" && !sentOfferIds.includes(row.id) ? (
           <Button
             size="sm"
             onClick={() => {
@@ -50,14 +52,18 @@ export default function CompanyOffersPage() {
             Send offer
           </Button>
         ) : (
-          <span className="text-caption">—</span>
+          <span className="text-caption text-teal">{sentOfferIds.includes(row.id) ? "Sent in demo" : "—"}</span>
         ),
     },
   ];
 
   return (
     <>
-      <PageHeader title="Offers" description="Manage job offers to candidates." />
+      <PageHeader
+        title="Offers"
+        description="Manage job offers to candidates."
+        action={<Button variant="secondary" asChild><Link href="/company/payments">Continue to Payments</Link></Button>}
+      />
       <DataTable
         data={companyOffers}
         columns={columns}
@@ -70,7 +76,10 @@ export default function CompanyOffersPage() {
         title="Send offer?"
         description={`Send offer to ${selectedOffer?.developer.name} for ${selectedOffer?.role} at ${selectedOffer?.salary}?`}
         confirmLabel="Send offer"
-        onConfirm={() => setConfirmOpen(false)}
+        onConfirm={() => {
+          if (selectedOffer) setSentOfferIds((current) => [...current, selectedOffer.id]);
+          setConfirmOpen(false);
+        }}
       />
     </>
   );

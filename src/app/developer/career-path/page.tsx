@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { CAREER_PATHS } from "@/lib/platform-config";
 
 export default function CareerPathPage() {
-  const [path, setPath] = useState<(typeof CAREER_PATHS)[number] | "">("");
+  const [path, setPath] = useState<(typeof CAREER_PATHS)[number] | "">("Full-Stack Developer");
   const [saved, setSaved] = useState(false);
 
   return (

@@ -63,7 +63,9 @@ export default async function InterviewDetailPage({
           </a>
         </Button>
         <Button variant="secondary" className="flex-1">Reschedule</Button>
-        <Button variant="ghost" className="flex-1">Decline</Button>
+        <Button variant="secondary" className="flex-1" asChild>
+          <Link href="/developer/offers/offer-1">Continue to Offer</Link>
+        </Button>
       </div>
     </div>
   );

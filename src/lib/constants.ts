@@ -46,7 +46,9 @@ export const BRAND = {
 
 export const DEVELOPER_NAV = [
   { label: "Dashboard", href: "/developer/dashboard", icon: "LayoutDashboard" },
+  { label: "Verification", href: "/developer/verification", icon: "ShieldCheck" },
   { label: "Projects", href: "/developer/projects", icon: "FolderKanban" },
+  { label: "Internal Projects", href: "/developer/internal-projects", icon: "Briefcase" },
   { label: "Challenges", href: "/developer/challenges", icon: "BrainCircuit" },
   { label: "Skills", href: "/developer/skills", icon: "BadgeCheck" },
   { label: "Assessments", href: "/developer/assessment", icon: "FileCode2" },
@@ -59,9 +61,12 @@ export const DEVELOPER_NAV = [
 
 export const COMPANY_NAV = [
   { label: "Dashboard", href: "/company/dashboard", icon: "LayoutDashboard" },
+  { label: "Verification", href: "/company/verification", icon: "ShieldCheck" },
   { label: "Projects", href: "/company/projects", icon: "FolderKanban" },
   { label: "Talent", href: "/company/talent", icon: "UserSearch" },
   { label: "Hiring", href: "/company/hiring", icon: "Handshake" },
+  { label: "Interviews", href: "/company/interviews", icon: "UserCheck" },
+  { label: "Offers", href: "/company/offers", icon: "Mail" },
   { label: "Evaluations", href: "/company/evaluations", icon: "ClipboardCheck" },
   { label: "Payments", href: "/company/payments", icon: "WalletCards" },
   { label: "Notifications", href: "/company/notifications", icon: "BellRing" },

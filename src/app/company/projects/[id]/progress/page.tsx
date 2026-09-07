@@ -1,10 +1,12 @@
 import { notFound } from "next/navigation";
 import { Users } from "lucide-react";
+import Link from "next/link";
 import { ProjectTabs } from "@/components/company/project-tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar } from "@/components/ui/avatar";
 import { ProgressBar } from "@/components/ui/progress";
 import { StatusBadge } from "@/components/ui/status-badges";
+import { Button } from "@/components/ui/button";
 import { companyProjects } from "@/lib/mock-data";
 import { assignmentDisplayStatus, getAcceptedAssignments } from "@/lib/assignments";
 
@@ -46,6 +48,11 @@ export default async function ProjectProgressPage({ params }: PageProps<"/compan
             </CardContent>
           </Card>
         ))}
+      </div>
+      <div className="mt-6 flex justify-end">
+        <Button asChild>
+          <Link href={`/company/projects/${project.id}/submissions`}>Review Submissions</Link>
+        </Button>
       </div>
     </>
   );

@@ -23,7 +23,9 @@ export default function AdminCompanyVerificationDetailPage({
   const company = item.company;
   const [dialog, setDialog] = useState<"approve" | "reject" | "more-info" | null>(null);
   const [status, setStatus] = useState<VerificationStatus>(company.verificationStatus);
-  const [notes, setNotes] = useState(company.adminNotes ?? "");
+  const [notes, setNotes] = useState(
+    "adminNotes" in company && typeof company.adminNotes === "string" ? company.adminNotes : ""
+  );
 
   return (
     <>
